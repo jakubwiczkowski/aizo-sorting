@@ -1,6 +1,11 @@
 #include "bubble_sort.h"
 
 template <typename T>
+int bubble_sort<T>::get_id() const {
+    return 1;
+}
+
+template <typename T>
 void bubble_sort<T>::sort(data<T>& to_sort) {
     index_t n = to_sort.get_size();
 
@@ -17,17 +22,3 @@ void bubble_sort<T>::sort(data<T>& to_sort) {
         n = new_n;
     }
 }
-
-// procedure bubbleSort(A : list of sortable items)
-//     n := length(A)
-//     repeat
-//         newn := 0
-//         for i := 1 to n - 1 inclusive do
-//             if A[i - 1] > A[i] then
-//                 swap(A[i - 1], A[i])
-//                 newn := i
-//             end if
-//         end for
-//         n := newn
-//     until n ≤ 1
-// end procedure

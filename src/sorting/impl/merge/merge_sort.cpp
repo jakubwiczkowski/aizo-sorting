@@ -1,6 +1,11 @@
 #include "merge_sort.h"
 
 template <typename T>
+int merge_sort<T>::get_id() const {
+    return 3;
+}
+
+template <typename T>
 void merge_sort<T>::sort(data<T>& to_sort) {
     if (to_sort.get_size() <= 1) return;
 

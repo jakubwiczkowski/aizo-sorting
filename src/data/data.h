@@ -4,6 +4,7 @@
 #include <memory>
 
 typedef unsigned long index_t;
+typedef signed long s_index_t;
 
 template <typename T>
 class data {
@@ -13,7 +14,7 @@ class data {
 
 public:
     data(index_t size);
-    data(index_t size, T* array_to_copy);
+    data(index_t size, std::unique_ptr<T[]>& array_to_cop);
     data(data<T>& to_copy);
     data();
     data(data<T>&& arg) : array(std::move(arg.array)) {
@@ -34,9 +35,11 @@ public:
     std::unique_ptr<data<T>> subdivision(index_t start, index_t end);
     std::unique_ptr<data<T>> subdivide_to_end(index_t start);
 
-    static data<T> sum(data<T>& left, data<T>& right);
+    bool is_sorted();
 
-    static T* generate_random_data(index_t size);
+    static std::unique_ptr<data<T>>  sum(data<T>& left, data<T>& right);
+
+    static std::unique_ptr<T[]> generate_random_data(index_t size);
 
     T& operator[](index_t idx) { return array[idx]; }
     const T& operator[](index_t idx) const { return array[idx]; }

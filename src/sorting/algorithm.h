@@ -6,9 +6,11 @@
 template<typename T>
 class algorithm {
 public:
+    [[nodiscard]] virtual int get_id() const;
     virtual void sort(data<T>& to_sort);
 };
 
+template class algorithm<int>;
 
 
 #endif //ALGORITHM_H
