@@ -6,7 +6,7 @@
 template<typename T>
 class algorithm {
 public:
-    void sort(data<T>& to_sort);
+    virtual void sort(data<T>& to_sort);
 };
 
 

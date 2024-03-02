@@ -32,6 +32,9 @@ data<T>::data() {
 
 template <typename T>
 data<T>::~data() {
+    if (this->array == nullptr)
+        return;
+
     delete[] this->array;
 }
 
@@ -42,8 +45,6 @@ bool data<T>::is_empty() {
 
 template <typename T>
 T data<T>::get_at(index_t index) {
-    if (index >= get_size())
-        std::cout << "bruh";
     return this->array[index];
 }
 
@@ -65,57 +66,24 @@ index_t data<T>::get_size() const {
 }
 
 template <typename T>
-data<T> data<T>::subdivision(index_t start, index_t end) {
-    std::cout << " # subdividing ";
-    print();
-    std::cout << "\n";
-
+data<T>* data<T>::subdivision(index_t start, index_t end) {
     index_t size = end - start;
-    std::cout << "  > final size: " << size << "\n";
-    std::cout << "  > from " << start << " to " << end << "\n";
 
     if (size == 0 || start > get_size() || end > get_size() || start >= end)
-        return data<T>();
+        return new data<T>();
 
-    auto new_data = data<T>(size);
-    std::cout << "  > new alloc size: " << new_data.get_size() << "\n";
+    auto new_data = new data<T>(size);
 
     for (index_t idx = 0; idx < size; idx++) {
-        new_data.set_at(idx, get_at(idx + start));
+        (*new_data)[idx] = array[idx + start];
     }
-
-    std::cout << "  > subdivided: ";
-    new_data.print();
-    std::cout << "\n";
 
     return new_data;
 }
 
 template <typename T>
-data<T> data<T>::subdivide_to_end(index_t start) {
+data<T>* data<T>::subdivide_to_end(index_t start) {
     return subdivision(start, get_size());
-    // std::cout << " # subdividing ";
-    // print();
-    // std::cout << "\n";
-    //
-    // index_t size = get_size() - start;
-    // std::cout << "  > final size: " << size << "\n";
-    // std::cout << "  > from " << start << " to " << size << "\n";
-    //
-    // if (size == 0 || start > get_size())
-    //     return data<T>();
-    //
-    // auto new_data = data<T>(size);
-    //
-    // for (index_t idx = 0; idx < size; idx++) {
-    //     new_data.set_at(idx, get_at(start + idx));
-    // }
-    //
-    // std::cout << "  > subdivided: ";
-    // new_data.print();
-    // std::cout << "\n";
-    //
-    // return new_data;
 }
 
 template <typename T>

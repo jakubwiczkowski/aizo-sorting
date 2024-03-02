@@ -8,8 +8,8 @@
 template<typename T>
 class merge_sort : public algorithm<T> {
 public:
-    void sort(data<T>& to_sort);
-    data<T> merge(data<T> left, data<T> right);
+    void sort(data<T>& to_sort) override;
+    data<T>* merge(data<T>* left, data<T>* right);
 };
 
 template class merge_sort<int>;
