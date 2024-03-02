@@ -1,26 +1,8 @@
 #include <chrono>
 #include <iostream>
-#include <random>
 
 #include "./data/data.h"
-#include "./sorting/impl/insertion_sort.h"
-#include "sorting/impl/bubble_sort.h"
 #include "sorting/impl/merge_sort.h"
-
-template<typename T>
-T* generateArray(int size) {
-    std::random_device rd;
-    std::mt19937 mt(rd());
-    std::uniform_int_distribution<T> dist(1, 100000);
-
-    T* arr = new T[size];
-
-    for (int i = 0; i < size; i++) {
-        arr[i] = dist(mt);
-    }
-
-    return arr;
-}
 
 int main() {
     // const int array_sizes[] = {10000, 20000, 50000, 100000, 200000, 500000};

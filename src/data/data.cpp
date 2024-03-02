@@ -6,7 +6,7 @@
 template <typename T>
 data<T>::data(index_t size) {
     this->size = size;
-    this->array = new T[size];
+    this->array = std::unique_ptr<T[]>(new T[size]);
 }
 
 template <typename T>
@@ -28,14 +28,6 @@ data<T>::data() {
     this->size = 0;
     this->empty = true;
     this->array = nullptr;
-}
-
-template <typename T>
-data<T>::~data() {
-    if (this->array == nullptr)
-        return;
-
-    delete[] this->array;
 }
 
 template <typename T>
@@ -66,13 +58,13 @@ index_t data<T>::get_size() const {
 }
 
 template <typename T>
-data<T>* data<T>::subdivision(index_t start, index_t end) {
+std::unique_ptr<data<T>> data<T>::subdivision(index_t start, index_t end) {
     index_t size = end - start;
 
     if (size == 0 || start > get_size() || end > get_size() || start >= end)
-        return new data<T>();
+        return std::make_unique<data<T>>();
 
-    auto new_data = new data<T>(size);
+    auto new_data = std::make_unique<data<T>>(size);
 
     for (index_t idx = 0; idx < size; idx++) {
         (*new_data)[idx] = array[idx + start];
@@ -82,7 +74,7 @@ data<T>* data<T>::subdivision(index_t start, index_t end) {
 }
 
 template <typename T>
-data<T>* data<T>::subdivide_to_end(index_t start) {
+std::unique_ptr<data<T>> data<T>::subdivide_to_end(index_t start) {
     return subdivision(start, get_size());
 }
 

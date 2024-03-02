@@ -12,23 +12,16 @@ void merge_sort<T>::sort(data<T>& to_sort) {
     sort(*left_elements);
     sort(*right_elements);
 
-    auto sorted_left = new data<T>(*left_elements);
-    auto sorted_right = new data<T>(*right_elements);
-
-    data<T>* merged = merge(sorted_left, sorted_right);
+    auto merged = std::move(merge(left_elements, right_elements));
 
     for (index_t idx = 0; idx < merged->get_size(); idx++) {
         to_sort[idx] = (*merged)[idx];
     }
-
-    delete left_elements, right_elements;
-
-    delete merged;
 }
 
 template <typename T>
-data<T>* merge_sort<T>::merge(data<T>* left, data<T>* right) {
-    auto merged = new data<T>(left->get_size() + right->get_size());
+std::unique_ptr<data<T>> merge_sort<T>::merge(std::unique_ptr<data<T>>& left, std::unique_ptr<data<T>>& right) {
+    auto merged = std::make_unique<data<T>>(left->get_size() + right->get_size());
 
     index_t current_idx = 0;
     while (!left->is_empty() && !right->is_empty()) {
@@ -38,15 +31,11 @@ data<T>* merge_sort<T>::merge(data<T>* left, data<T>* right) {
         if (current_left <= current_right) {
             (*merged)[current_idx] = current_left;
 
-            auto new_data = left->subdivide_to_end(1);
-            delete left;
-            left = new_data;
+            left = left->subdivide_to_end(1);
         } else {
             (*merged)[current_idx] = current_right;
 
-            auto new_data = right->subdivide_to_end(1);
-            delete right;
-            right = new_data;
+            right = right->subdivide_to_end(1);
         }
 
         current_idx++;
@@ -57,13 +46,10 @@ data<T>* merge_sort<T>::merge(data<T>* left, data<T>* right) {
         current_idx++;
 
         if (left->get_size() != 1) {
-            auto new_data = left->subdivide_to_end(1);
-            delete left;
-            left = new_data;
+            left = left->subdivide_to_end(1);
         }
         else {
-            delete left;
-            left = new data<T>();
+            left = std::make_unique<data<T>>();
         }
     }
 
@@ -72,16 +58,12 @@ data<T>* merge_sort<T>::merge(data<T>* left, data<T>* right) {
         current_idx++;
 
         if (right->get_size() != 1) {
-            auto new_data = right->subdivide_to_end(1);
-            delete right;
-            right = new_data;
-        } else {
-            delete right;
-            right = new data<T>();
+            right = right->subdivide_to_end(1);
+        }
+        else {
+            right = std::make_unique<data<T>>();
         }
     }
-
-    delete left, right;
 
     return merged;
 }

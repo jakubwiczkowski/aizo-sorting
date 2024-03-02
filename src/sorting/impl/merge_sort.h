@@ -9,7 +9,7 @@ template<typename T>
 class merge_sort : public algorithm<T> {
 public:
     void sort(data<T>& to_sort) override;
-    data<T>* merge(data<T>* left, data<T>* right);
+    std::unique_ptr<data<T>> merge(std::unique_ptr<data<T>>& left, std::unique_ptr<data<T>>& right);
 };
 
 template class merge_sort<int>;
