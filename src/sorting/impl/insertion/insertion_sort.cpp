@@ -2,7 +2,7 @@
 
 template <typename T>
 int insertion_sort<T>::get_id() const {
-    return 2;
+    return 1;
 }
 
 template <typename T>

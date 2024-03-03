@@ -8,8 +8,8 @@ public:
     [[nodiscard]] virtual int get_id() const;
     void sort(data<T>& to_sort);
 
-    void quicksort(data<T>& to_sort, index_t low, index_t high);
-    index_t partition(data<T>& to_partition, index_t low, index_t high);
+    void quicksort(data<T>& to_sort, s_index_t low, s_index_t high);
+    s_index_t partition(data<T>& to_partition, s_index_t low, s_index_t high);
 };
 
 template class quick_sort<int>;

@@ -11,6 +11,7 @@ public:
 };
 
 template class algorithm<int>;
+template class algorithm<float>;
 
 
 #endif //ALGORITHM_H

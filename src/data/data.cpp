@@ -102,7 +102,7 @@ void data<T>::print() {
 }
 
 template <typename T>
-std::unique_ptr<data<T>>  data<T>::sum(data<T>& left, data<T>& right) {
+std::unique_ptr<data<T>> data<T>::sum(data<T>& left, data<T>& right) {
     index_t cumulative_size = left.get_size() + right.get_size();
 
     std::unique_ptr<data<T>> combined_data = std::make_unique<data<T>>(cumulative_size);
@@ -122,7 +122,9 @@ template <>
 std::unique_ptr<int[]> data<int>::generate_random_data(index_t size) {
     std::random_device rd;
     std::mt19937 mt(rd());
-    std::uniform_int_distribution dist(1, 20);
+    std::uniform_int_distribution dist(
+        std::numeric_limits<int>::min(),
+        std::numeric_limits<int>::max());
 
     auto arr = std::make_unique<int[]>(size);
 
@@ -137,7 +139,9 @@ template <>
 std::unique_ptr<float[]> data<float>::generate_random_data(index_t size) {
     std::random_device rd;
     std::mt19937 mt(rd());
-    std::uniform_real_distribution<float> dist(1, 20);
+    std::uniform_real_distribution<float> dist(
+        std::numeric_limits<float>::min(),
+        std::numeric_limits<float>::max());
 
     auto arr = std::make_unique<float[]>(size);
 

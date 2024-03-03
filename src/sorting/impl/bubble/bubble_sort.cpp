@@ -2,7 +2,7 @@
 
 template <typename T>
 int bubble_sort<T>::get_id() const {
-    return 1;
+    return 2;
 }
 
 template <typename T>

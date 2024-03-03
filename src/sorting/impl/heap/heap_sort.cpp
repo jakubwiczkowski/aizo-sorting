@@ -2,7 +2,7 @@
 
 template <typename T>
 int heap_sort<T>::get_id() const {
-    return 5;
+    return 4;
 }
 
 template <typename T>
