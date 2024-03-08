@@ -7,7 +7,7 @@ template<typename T>
 class binary_insertion_sort : public algorithm<T> {
 public:
     [[nodiscard]] int get_id() const override;
-    index_t binary_search(data<T>& to_sort, T item, index_t high, index_t low);
+    index_t binary_search(data<T>& to_sort, T item, index_t low, index_t high);
     void sort(data<T>& to_sort) override;
 };
 

@@ -6,17 +6,16 @@
 
 template<typename T>
 class shell_sort : public algorithm<T> {
-private:
-    std::function<int(int, int)> generator_function;
-    std::unique_ptr<int[]> gaps;
+    std::function<index_t(index_t, index_t)> generator_function;
+    std::unique_ptr<index_t[]> gaps;
     int gaps_size;
 public:
-    explicit shell_sort(std::function<int(int, int)> generator_function);
+    explicit shell_sort(std::function<index_t(index_t, index_t)> generator_function);
 
-    void generate_gaps(int N);
+    void generate_gaps(index_t N);
 
-    [[nodiscard]] virtual int get_id() const;
-    void sort(data<T>& to_sort);
+    [[nodiscard]] int get_id() const override;
+    void sort(data<T>& to_sort) override;
 };
 
 template class shell_sort<int>;

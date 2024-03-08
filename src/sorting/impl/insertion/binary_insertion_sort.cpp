@@ -1,44 +1,52 @@
 #include "binary_insertion_sort.h"
 
+#include <cmath>
+#include <iostream>
+
 template <typename T>
 int binary_insertion_sort<T>::get_id() const {
     return 4;
 }
 
 template <typename T>
-index_t binary_insertion_sort<T>::binary_search(data<T>& to_sort, T item, index_t high, index_t low) {
-    if (high <= low)
-        return (item > to_sort[low]) ?
-                (low + 1) : low;
+index_t binary_insertion_sort<T>::binary_search(data<T>& to_sort, T item, index_t low, index_t high) {
+    while (low != high) {
+        index_t mid = low + (high - low) / 2;
 
-    index_t mid = (low + high) / 2;
+        if (item < to_sort[mid])
+            high = mid;
+        else
+            low = mid + 1;
+    }
 
-    if (item == to_sort[mid])
-        return mid + 1;
-
-    if (item > to_sort[mid])
-        return binary_search(to_sort, item,
-                            mid + 1, high);
-    return binary_search(to_sort, item, low,
-                        mid - 1);
+    return low;
 }
+
+// function binary_search_alternative(A, n, T) is
+//     L := 0
+//     R := n − 1
+//     while L != R do
+//         m := ceil((L + R) / 2)
+//         if A[m] > T then
+//             R := m − 1
+//         else:
+//             L := m
+//     if A[L] = T then
+//         return L
+//     return unsuccessful
 
 template <typename T>
 void binary_insertion_sort<T>::sort(data<T>& to_sort) {
     if (to_sort.get_size() == 1) return;
 
-    for (s_index_t idx = 1; idx < to_sort.get_size(); idx++) {
-        s_index_t j = idx;
-        T selected = to_sort[idx];
+    for (index_t i = 1; i < to_sort.get_size(); ++i) {
+        T key = to_sort[i];
+        index_t location = binary_search(to_sort, key, 0, i);
 
-        const index_t location = binary_search(to_sort, selected, 0, j);
-
-        while (j > location) {
+        for (index_t j = i; j > location; --j)
             to_sort[j] = to_sort[j - 1];
-            j--;
-        }
 
-        to_sort[location] = selected;
+        to_sort[location] = key;
     }
 }
 

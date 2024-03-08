@@ -22,4 +22,8 @@ add_executable(aizo_sorting_exe src/main.cpp
         src/sorting/impl/quick/quick_sort.h
         src/sorting/impl/shell/shell_sort.cpp
         src/sorting/impl/shell/shell_sort.h
+        src/menu/menu.cpp
+        src/menu/menu.h
+        src/menu/menu.cpp
+        src/menu/menu.h
 )

@@ -37,7 +37,7 @@ public:
 
     bool is_sorted();
 
-    static std::unique_ptr<data<T>>  sum(data<T>& left, data<T>& right);
+    static std::unique_ptr<data<T>> sum(data<T>& left, data<T>& right);
 
     static std::unique_ptr<T[]> generate_random_data(index_t size);
 

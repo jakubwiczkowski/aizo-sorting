@@ -125,6 +125,7 @@ std::unique_ptr<int[]> data<int>::generate_random_data(index_t size) {
     std::uniform_int_distribution dist(
         std::numeric_limits<int>::min(),
         std::numeric_limits<int>::max());
+    // std::uniform_int_distribution dist(0, 15);
 
     auto arr = std::make_unique<int[]>(size);
 
