@@ -27,3 +27,4 @@ add_executable(aizo_sorting_exe src/main.cpp
         src/menu/menu.cpp
         src/menu/menu.h
 )
+target_link_options(aizo_sorting_exe PRIVATE -static-libgcc -static-libstdc++ -lwinpthread -static)
