@@ -293,7 +293,7 @@ int main() {
 
     menu main_menu(7);
     main_menu.add_option(0, "Wykonaj wszystkie pomiary", [&display_values] {
-        const int array_sizes[] = {1000, 2000, 5000, 10000, 20000, 50000, 100000};
+        const int array_sizes[] = {100000};
         const unsigned long repeats = 100;
 
         std::cout << "\n # DLA TYPU INT \n\n";
@@ -460,14 +460,22 @@ int main() {
     main_menu.add_option(5, "Posortuj", [&type, &int_data, &float_data, &picked_algorithm_int, &picked_algorithm_float] {
         if (type == INT) {
             data<int> copy = data<int>(int_data);
+            const auto start_time = std::chrono::high_resolution_clock::now();
             picked_algorithm_int->sort(copy);
+            const auto end_time = std::chrono::high_resolution_clock::now();
             copy.print();
             std::cout << "\n";
+            auto total = std::chrono::duration_cast<std::chrono::nanoseconds>(end_time - start_time).count();
+            std::cout << "Posortowano w " << total << " nanosekund.\n";
         } else {
             data<float> copy = data<float>(float_data);
+            const auto start_time = std::chrono::high_resolution_clock::now();
             picked_algorithm_float->sort(copy);
+            const auto end_time = std::chrono::high_resolution_clock::now();
             copy.print();
             std::cout << "\n";
+            auto total = std::chrono::duration_cast<std::chrono::nanoseconds>(end_time - start_time).count();
+            std::cout << "Posortowano w " << total << " nanosekund.\n";
         }
     });
     main_menu.add_option(6, "Wyjście", [&main_menu] {
