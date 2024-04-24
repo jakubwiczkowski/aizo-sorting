@@ -8,7 +8,7 @@ menu::menu(index_t menu_size) {
     this->functions = std::make_unique<std::function<void()>[]>(menu_size);
 }
 
-void menu::add_option(index_t index, const char title[], std::function<void()> to_execute) const {
+void menu::add_option(index_t index, const char* title, std::function<void()> to_execute) const {
     this->titles[index] = title;
     this->functions[index] = std::move(to_execute);
 }

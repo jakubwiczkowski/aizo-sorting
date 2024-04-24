@@ -102,30 +102,20 @@ void data<T>::print() {
 }
 
 template <typename T>
-std::unique_ptr<data<T>> data<T>::sum(data<T>& left, data<T>& right) {
-    index_t cumulative_size = left.get_size() + right.get_size();
+std::unique_ptr<T[]> data<T>::generate_random_data(index_t size) {
+    return generate_random_data(size, std::numeric_limits<T>::min(), std::numeric_limits<T>::max());
+}
 
-    std::unique_ptr<data<T>> combined_data = std::make_unique<data<T>>(cumulative_size);
-
-    for (index_t idx = 0; idx < left.get_size(); idx++) {
-        (*combined_data)[idx] = left.get_at(idx);
-    }
-
-    for (index_t idx = 0; idx < right.get_size(); idx++) {
-        (*combined_data)[idx + left.get_size()] = right.get_at(idx);
-    }
-
-    return combined_data;
+template <typename T>
+std::unique_ptr<T[]> data<T>::generate_random_data(index_t size, T min, T max) {
+    return generate_random_data(size, min, max);
 }
 
 template <>
-std::unique_ptr<int[]> data<int>::generate_random_data(index_t size) {
+std::unique_ptr<int[]> data<int>::generate_random_data(index_t size, int min, int max) {
     std::random_device rd;
     std::mt19937 mt(rd());
-    std::uniform_int_distribution dist(
-        std::numeric_limits<int>::min(),
-        std::numeric_limits<int>::max());
-    // std::uniform_int_distribution dist(0, 15);
+    std::uniform_int_distribution dist(min, max);
 
     auto arr = std::make_unique<int[]>(size);
 
@@ -137,12 +127,10 @@ std::unique_ptr<int[]> data<int>::generate_random_data(index_t size) {
 }
 
 template <>
-std::unique_ptr<float[]> data<float>::generate_random_data(index_t size) {
+std::unique_ptr<float[]> data<float>::generate_random_data(index_t size, float min, float max) {
     std::random_device rd;
     std::mt19937 mt(rd());
-    std::uniform_real_distribution<float> dist(
-        std::numeric_limits<float>::min(),
-        std::numeric_limits<float>::max());
+    std::uniform_real_distribution dist(min, max);
 
     auto arr = std::make_unique<float[]>(size);
 
@@ -151,4 +139,36 @@ std::unique_ptr<float[]> data<float>::generate_random_data(index_t size) {
     }
 
     return arr;
+}
+
+template <typename T>
+std::unique_ptr<T[]> data<T>::generate_sorted_data(index_t size, double sorted_part) {
+    auto arr = std::make_unique<T[]>(size);
+
+    const index_t max_sorted = size * sorted_part;
+
+    for (index_t idx = 0; idx < max_sorted; idx++) {
+        arr[idx] = idx;
+    }
+
+    const index_t to_fill = size - max_sorted;
+    auto generated = generate_random_data(to_fill, arr[max_sorted - 1], static_cast<T>(size));
+
+    for (index_t idx = max_sorted; idx < size; idx++) {
+        arr[idx] = generated[idx - max_sorted];
+    }
+
+    return arr;
+}
+
+template <typename T>
+std::unique_ptr<T[]> data<T>::generate_sorted_reversed_data(index_t size) {
+    auto arr = generate_sorted_data(size, 1);
+    auto reversed_array = std::make_unique<T[]>(size);
+
+    for (index_t idx = 0; idx < size; idx++) {
+        reversed_array[idx] = arr[size - idx - 1];
+    }
+
+    return reversed_array;
 }

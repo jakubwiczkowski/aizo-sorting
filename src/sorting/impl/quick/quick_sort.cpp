@@ -17,19 +17,19 @@ void quick_sort<T>::sort(data<T>& to_sort) {
 }
 
 template <typename T>
-void quick_sort<T>::quicksort(data<T>& to_sort, s_index_t low, s_index_t high) {
+void quick_sort<T>::quicksort(data<T>& to_sort, index_t low, index_t high) {
     if (low >= high)
         return;
 
-    s_index_t partition_idx = partition(to_sort, low, high);
+    index_t partition_idx = partition(to_sort, low, high);
 
-    quicksort(to_sort, low, partition_idx - 1);
+    quicksort(to_sort, low, partition_idx);
     quicksort(to_sort, partition_idx + 1, high);
 }
 
 template <typename T>
-s_index_t quick_sort<T>::partition(data<T>& to_partition, s_index_t low, s_index_t high) {
-    s_index_t pivot_position;
+index_t quick_sort<T>::partition(data<T>& to_partition, index_t low, index_t high) {
+    index_t pivot_position;
     switch (this->pivot_pos) {
         case LEFT: {
             pivot_position = low;
@@ -40,7 +40,7 @@ s_index_t quick_sort<T>::partition(data<T>& to_partition, s_index_t low, s_index
             break;
         }
         case MIDDLE: {
-            pivot_position = (low + high) / 2;
+            pivot_position = low + (high - low) / 2;
             break;
         }
         case RANDOM: {
@@ -48,23 +48,27 @@ s_index_t quick_sort<T>::partition(data<T>& to_partition, s_index_t low, s_index
             break;
         }
     }
-    T pivot = to_partition[pivot_position];
-    s_index_t i = low - 1;
 
-    for (index_t j = low; j < high; j++) {
-        if (to_partition[j] <= pivot) {
-            ++i;
-            to_partition.swap(i, j);
+    T pivot = to_partition[pivot_position];
+
+    index_t left = low, right = high;
+
+    while (true) {
+        while (to_partition[left] < pivot) ++left;
+        while (to_partition[right] > pivot) --right;
+
+        if (left < right) {
+            to_partition.swap(left, right);
+            ++left;
+            --right;
+        } else {
+            if (right == high) right--;
+            return right;
         }
     }
-
-    ++i;
-    to_partition.swap(i, pivot_position);
-
-    return i;
 }
 
-s_index_t generate_index(s_index_t from, s_index_t to) {
+index_t generate_index(index_t from, index_t to) {
     static std::random_device rd;
     static std::mt19937 mt(rd());
     std::uniform_int_distribution dist(from, to);

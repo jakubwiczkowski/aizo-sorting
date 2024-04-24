@@ -1,8 +1,5 @@
 #include "binary_insertion_sort.h"
 
-#include <cmath>
-#include <iostream>
-
 template <typename T>
 int binary_insertion_sort<T>::get_id() const {
     return 4;
@@ -22,19 +19,6 @@ index_t binary_insertion_sort<T>::binary_search(data<T>& to_sort, T item, index_
     return low;
 }
 
-// function binary_search_alternative(A, n, T) is
-//     L := 0
-//     R := n − 1
-//     while L != R do
-//         m := ceil((L + R) / 2)
-//         if A[m] > T then
-//             R := m − 1
-//         else:
-//             L := m
-//     if A[L] = T then
-//         return L
-//     return unsuccessful
-
 template <typename T>
 void binary_insertion_sort<T>::sort(data<T>& to_sort) {
     if (to_sort.get_size() == 1) return;
@@ -49,15 +33,3 @@ void binary_insertion_sort<T>::sort(data<T>& to_sort) {
         to_sort[location] = key;
     }
 }
-
-// procedure binaryInsertionSort(Array)
-//     for i = 1 to length(Array) do:
-//         key = Array[i]
-//         pos = binarySearch(Array, key, 0, i-1)
-//         j = i
-//         while j > pos
-//             Array[j] = Array[j-1]
-//             j = j-1
-//         Array[pos] = key
-//     end for
-// end procedure
