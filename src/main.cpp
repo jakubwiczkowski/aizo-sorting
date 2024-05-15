@@ -37,8 +37,8 @@ const auto shell_function_second = [](const index_t n, const index_t k) -> index
  * Potrzebna do automatycznego zbierania danych.
  */
 algorithm<int> *int_algorithms[] = {
-        new shell_sort<int>(shell_function_first, true),
-        new shell_sort<int>(shell_function_second, false),
+        new shell_sort<int>(shell_function_first, false),
+        new shell_sort<int>(shell_function_second, true),
         new quick_sort<int>(LEFT),
         new quick_sort<int>(MIDDLE),
         new quick_sort<int>(RIGHT),
@@ -293,12 +293,12 @@ int main() {
 
     menu main_menu(7);
     main_menu.add_option(0, "Wykonaj wszystkie pomiary", [&display_values] {
-        const int array_sizes[] = {100000};
+        const int array_sizes[] = {1000, 2000, 5000, 10000, 20000, 50000, 100000};
         const unsigned long repeats = 100;
 
         std::cout << "\n # DLA TYPU INT \n\n";
 
-        for (int gen = 0; gen < 5; ++gen) {
+        for (int gen = 0; gen < 1; ++gen) {
             std::cout << "#### Typ sortowania: " << gen << "\n";
             for (auto algorithm: int_algorithms) {
                 std::string file_name = std::to_string(algorithm->get_id()).append("_out_int.txt");

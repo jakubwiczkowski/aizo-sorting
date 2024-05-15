@@ -58,7 +58,9 @@ void shell_sort<T>::sort(data<T>& to_sort) {
 
         if (gap == 0) continue;
 
-        for (index_t i = gap; i < to_sort.get_size(); ++i) {
+        for (index_t i = gap; i < to_sort.get_size(); i += gap) {
+            if (i >= to_sort.get_size()) continue;
+
             T temp = to_sort[i];
             index_t j;
             for (j = i; (j >= gap) && (to_sort[j - gap] > temp); j -= gap){
