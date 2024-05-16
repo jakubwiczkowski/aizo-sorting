@@ -8,7 +8,7 @@
 template<typename T>
 class heap_sort : public algorithm<T> {
 public:
-    [[nodiscard]] virtual int get_id() const override;
+    [[nodiscard]] int get_id() const override;
     void sort(data<T>& to_sort) override;
 
     /**

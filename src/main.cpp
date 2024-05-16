@@ -123,7 +123,7 @@ int main() {
                                   }
                                   algorithm_menu.close();
                               });
-    algorithm_menu.add_option(1, "Shell sort (2 * floor(n / pow(2, k + 1)) + 1)",
+    algorithm_menu.add_option(1, "Shell sort (pow(2, k) - 1)",
                               [&type, &picked_algorithm_int, &picked_algorithm_float, &algorithm_menu] {
                                   if (type == INT) {
                                       picked_algorithm_int = &shell_second_instance_int;
